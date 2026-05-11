@@ -1,5 +1,6 @@
 import time
 import tracemalloc
+import dados
 
 def insertionSort(arr):
     movimentacao = 0 
@@ -32,7 +33,7 @@ def printArray(arr):
 
 # Driver method
 if __name__ == "__main__":
-    arr = list(range(1000, 0, -1))
+    arr = dados.retorna_entrada(100000, 'inverso')
 
     tracemalloc.start()
     inicio = time.perf_counter()
@@ -51,3 +52,6 @@ if __name__ == "__main__":
     tracemalloc.stop()
 
 # Neste trabalho, a métrica de movimentações corresponde à quantidade de operações de escrita realizadas sobre o vetor durante o processo de ordenação, incluindo deslocamentos de elementos e inserções de chaves.
+
+# O Insertion Sort apresentou desempenho inviável para grandes entradas em ordem inversa, devido à sua complexidade quadrática no pior caso, tornando a execução impraticável para volumes elevados de dados.
+

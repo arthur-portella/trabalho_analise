@@ -1,5 +1,9 @@
 import time
 import tracemalloc  
+import random
+import dados
+
+random.seed(42)
 
 comparacao = 0
 troca = 0
@@ -10,8 +14,13 @@ def partition(arr, low, high):
     global troca  
 
     # choose the pivot
-    pivot = arr[high]
+    pivot_index = random.randint(low, high)
+
+    swap(arr, pivot_index, high)
+    troca += 1
     
+    pivot = arr[high]
+
     # index of smaller element and indicates 
     # the right position of pivot found so far
     i = low - 1
@@ -54,7 +63,7 @@ def printArray(arr):
     print()
 
 if __name__ == "__main__":
-    arr = [10, 7, 8, 9]
+    arr = dados.retorna_entrada(100000, 'repetido')
     n = len(arr)
 
     tracemalloc.start()
@@ -66,7 +75,6 @@ if __name__ == "__main__":
     atual, pico = tracemalloc.get_traced_memory()
     duracao = fim - inicio
     
-    printArray(arr)
     print(f"Tempo de execução: {duracao:.8f} s")
     print(f"Comparações: {comparacao}")
     print(f"Trocas: {troca}")
@@ -74,4 +82,9 @@ if __name__ == "__main__":
 
     tracemalloc.stop()
 
-    # Neste trabalho, a métrica de trocas corresponde à quantidade de operações de troca executadas pelo algoritmo, independentemente de ocorrer alteração efetiva entre posições distintas do vetor.
+# Neste trabalho, a métrica de trocas corresponde à quantidade de operações de troca executadas pelo algoritmo, independentemente de ocorrer alteração efetiva entre posições distintas do vetor. Durante os experimentos, observou-se que a escolha do último elemento como pivô no Quick Sort levou à degradação significativa do desempenho em entradas previamente ordenadas, resultando em profundidade recursiva excessiva. Para minimizar esse comportamento, optou-se pela utilização de pivô aleatório.
+
+
+# A utilização de pivô aleatório introduziu pequeno aumento no custo de execução e no uso de memória devido à geração de números aleatórios e operações adicionais de troca. Entretanto, essa estratégia reduziu significativamente a ocorrência de particionamentos desbalanceados, tornando o algoritmo mais estável para diferentes distribuições de entrada.
+
+# Durante os experimentos, observou-se que o Quick Sort apresentou profundidade recursiva excessiva em entradas com grande quantidade de elementos repetidos, ocasionando estouro do limite de recursão da linguagem Python para grandes volumes de dados. Esse comportamento decorre do particionamento desbalanceado produzido pela implementação clássica do algoritmo.

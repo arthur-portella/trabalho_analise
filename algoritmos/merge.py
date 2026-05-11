@@ -1,5 +1,6 @@
 import time
 import tracemalloc  
+import dados
 
 comparacao = 0
 movimentacao = 0
@@ -69,7 +70,7 @@ def printArray(arr):
 
 # Driver code
 if __name__ == "__main__":
-    arr = list(range(1000000, 0, -1))
+    arr = dados.retorna_entrada(1000000, 'ordenado')
 
     tracemalloc.start()
     inicio = time.perf_counter()
